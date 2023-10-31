@@ -5,6 +5,7 @@ import { BsFillCloudSunFill } from "react-icons/bs";
 import { FiSun } from "react-icons/fi";
 import myContext from "../../context/data/myContext";
 import { RxCross2 } from "react-icons/rx";
+import { useSelector } from 'react-redux'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -20,7 +21,7 @@ export default function Navbar() {
     localStorage.clear("user");
     window.location.href = "/login";
   };
-
+  const cartItems = useSelector((state) => state.cart)
   return (
     <div className="bg-white sticky top-0 z-50  ">
       {/* Mobile menu */}
@@ -308,7 +309,7 @@ export default function Navbar() {
                       className="ml-2 text-sm font-medium text-gray-700 group-"
                       style={{ color: mode === "dark" ? "white" : "" }}
                     >
-                      0
+                      {cartItems.length}
                     </span>
                     <span className="sr-only">items in cart, view bag</span>
                   </Link>

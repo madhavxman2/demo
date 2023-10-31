@@ -24,10 +24,6 @@ function Home() {
 
   return (
     <Layout>
-      <div className="flex gap-5 justify-center">
-        <button className='bg-grey-300 p-5' onClick={()=>addCart()}>Add</button>
-        <button className='bg-grey-300 p-5' onClick={()=>deleteCart()}>Remove</button>
-      </div>
      <HeroSection/>
      <Filter/>
      <ProductCard/>

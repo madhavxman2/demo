@@ -18,11 +18,11 @@ function MyState(props) {
   const [loading, setLoading] = useState(false);
 
   const [products, setProducts] = useState({
-    title: null,
-    price: null,
-    imageUrl: null,
-    category: null,
-    description: null,
+    title: "",
+    price: "",
+    imageUrl: "",
+    category: "",
+    description: "",
     time: Timestamp.now(),
     date: new Date().toLocaleString("en-US", {
       month: "short",
@@ -72,7 +72,7 @@ function MyState(props) {
     const data = onSnapshot(q,(QuerySnapshot)=>{
       let productArray=[];
       QuerySnapshot.forEach((doc)=>{
-        productArray.push({...doc.data(),id:data.id});
+        productArray.push({...doc.data(),id:doc.id});
       });
       setProduct(productArray);
       setLoading(false);
@@ -88,7 +88,8 @@ useEffect(()=>{
   getProductData();
 },[]);
  
-// update product function
+
+// update product
 const editHandle = (item) => {
   setProducts(item)
 }
@@ -96,32 +97,41 @@ const editHandle = (item) => {
 const updateProduct = async (item) => {
   setLoading(true)
   try {
-    await setDoc(doc(fireDb, "products", products.id), products);
+    await setDoc(doc(fireDB, "products", products.id), products);
     toast.success("Product Updated successfully")
     getProductData();
     setLoading(false)
-    window.location.href = '/dashboard'
+    setTimeout(()=>{
+      window.location.href='/dashboard'
+    },800);
   } catch (error) {
     setLoading(false)
     console.log(error)
   }
   setProducts("")
 }
-
+// delete product
 const deleteProduct = async (item) => {
-
   try {
-    setLoading(true)
-    await deleteDoc(doc(fireDb, "products", item.id));
-    toast.success('Product Deleted successfully')
-    console.log(deleteDoc(doc(fireDb, "products", item.id)))
-    setLoading(false)
-    getProductData();
+    setLoading(true);
+
+    const productRef = doc(fireDB, "products", item.id); // Create a reference to the specific product document
+
+    await deleteDoc(productRef); // Delete the document using the reference
+
+    toast.success('Product Deleted successfully');
+    setLoading(false);
+
+    getProductData(); // Fetch the updated product data
+
   } catch (error) {
-    // toast.success('Product Deleted Falied')
-    setLoading(false)
+    toast.error('Product Deletion Failed');
+    setLoading(false);
   }
-}
+};
+
+
+
 
 
   return (

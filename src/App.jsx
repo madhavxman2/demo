@@ -15,7 +15,7 @@ import Login from "./pages/registration/Login";
 import Signup from "./pages/registration/Signup";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import AddProduct from "./pages/admin/pages/AddProject";
+import AddProduct from "./pages/admin/pages/AddProduct";
 import UpdateProduct from "./pages/admin/pages/UpdateProduct";
 
 function App() {
